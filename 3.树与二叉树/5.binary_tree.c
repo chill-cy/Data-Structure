@@ -6,68 +6,86 @@
  ************************************************************************/
 
 #include <stdio.h>
+#include <time.h>
 
 typedef struct Node {
-    int key;
+    int val;
     struct Node *lchild, *rchild;
 } Node;
 
-Node *getNewNode(int key) {
+typedef struct Tree {
+    Node *root;
+    int n;
+} Tree;
+
+Node *getNewNode(int val) {
     Node *p = (Node *)malloc(sizeof(Node));
-    p->key = key;
+    p->val = val;
     p->lchild = p->rchild = NULL;
     return p;
-}
+} 
 
-Node *insert(Node *tree, int val) {
-    if (tree == NULL) return getNewNode(val);
-    if (tree->key == val) return tree;
-    if (tree->key > val) tree->lchild = insert(tree->lchild, val);
-    else tree->rchild = insert(tree->rchild, val);
+Tree *getNewNode() {
+    Tree *tree = (Tree *)malloc(sizeof(Tree));
+    tree->n = 0;
+    tree->root = NULL;
     return tree;
 }
 
-void preorder(Node *tree) {
-    if (tree == NULL) return ;
-    printf("%d ", tree->key);
-    pre_order(tree->lchild);
-    pre_order(tree->rchild);
+void clearNode() {
+    if (node == NULL) return ;
+    clearNode(node->lchild);
+    clearNode(node->rchild);
+    free(node);
     return ;
 }
 
-void in_order(Node *tree) {
-    if (tree == NULL) return ;
-    in_order(tree->lchild);
-    printf("%d ", tree->key);
-    in_order(tree->rchild);
-}
-
-void post_order(Node *tree) {
-    if (tree == NULL) return ;
-    post_order(tree->lchild);
-    post_order(tree->rchild);
-    printf("%d ", tree->key);
-}
-
-void clear(Node *tree) {
-    if (tree == NULL) return ;
-    clear(tree->lchild);
-    clear(tree->rchild);
+void clearTree() {
+    clearNode(tree->root);
     free(tree);
     return ;
 }
 
+
+void outputNode(Node *root) {
+    if (root == NULL) return ;
+    printf("%d", root->val);
+    if (root->lchild == NULL && root->rchild == NULL) return ;
+    printf("(");
+
+}
+
+Node *insertNode(Node *root, int val) {
+    if (root == NULL) return getNewNode(val);
+    if (root->val == val) return root;
+    if (root->val > val) root->lchild = insertNode(root->lchild, val);
+    else root->rchild = insertNode(root->rchild, val);
+    return root;
+}
+
+void insert(Tree *tree, int val) {
+    int 
+    tree->val = val;
+}
+
+Tree *build {
+    
+}
+
+void outputTree(Tree *tree) {mZ    printf("tree(%d) = ")
+
+}
+
+void 
+void preorder(Tree *tree) {
+    printf("preorder : ");
+    preorderNode(tree->root);
+}
+
 int main() {
-    #define MAX_OP 20
     srand(time(0));
-    Node *root = NULL;
-    for (int i = 0; i < MAX_OP; i++) {
-        int val = rand() % 100;
-        printf("insert %d to binary search tree\n", val);
-        root = insert(root, val);
-        printf("pre_order = "), pre_order(root), printf("\n");
-        printf("in_order = "), in_order(root), printf("\n");
-        printf("post_order = "), post_order(root), printf("\n");
+    Tree *tree = getNewNode();
+    for (int i = 0; i < 10; i++) {
+        int val = rand()
     }
-    return 0;
 }
