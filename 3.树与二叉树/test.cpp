@@ -1,17 +1,18 @@
 /*************************************************************************
-	> File Name: 6.huffman-1.cpp
+	> File Name: test.cpp
 	> Author:jiangxiaoyu 
 	> Mail:2291372880@qq.com 
-	> Created Time: 2019年07月24日 星期三 13时08分39秒
+	> Created Time: 2019年07月24日 星期三 13时40分02秒
  ************************************************************************/
+
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #define MAX_N 1000
-#define swap(a, b) { \
-    __typeof(a) temp = a; \
-    a = b, b = temp; \
+#define swap(a, b) {\
+    __typeof(a) temp = a;\
+    a = b, b = temp;\
 }
 
 typedef struct Node {
@@ -41,14 +42,14 @@ Data arr[MAX_N + 5];
 Node *getNewNode(Data *obj) {
     Node *p = (Node *)malloc(sizeof(Node));
     p->ch = (obj ? obj->ch : 0);
-    p->p  = (obj ? obj->p : 0);
+    p->p = (obj ? obj->p : 0);
     p->next[0] = p->next[1] = NULL;
     return p;
 }
 
 HaffmanTree *getNewTree(int n) {
     HaffmanTree *tree = (HaffmanTree *)malloc(sizeof(HaffmanTree));
-    tree->codes = (Code *)malloc(sizeof(Code) * n);
+    tree->codes = (Codes *)malloc(sizeof(Code) * n);
     tree->root = NULL;
     tree->n = n;
     return tree;
@@ -58,7 +59,7 @@ void insertOnce(Node **arr, int n) {
     for (int j = n; j >= 1; j--) {
         if (arr[j]->p > arr[j - 1]->p) {
             swap(arr[j], arr[j - 1]);
-            continue;
+            continue ;
         }
         break;
     }
@@ -97,25 +98,6 @@ HaffmanTree *build(Data *arr, int n) {
         insertOnce(nodes, i - 1);
     }
     char *buff = (char *)malloc(sizeof(char) * n);
-    HaffmanTree *tree = getNewTree(n);
+    HaffmanTree *tree = getNewNode(n);
     tree->root = nodes[0];
-    extractCodes(tree->root, tree->codes, 0, 0, buff);
-    free(nodes);
-    free(buff);
-    return tree;
-}
-
-int main() {
-    int n;
-    char str[10];
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++) {
-        scanf("%s%lf", str, &arr[i].p);
-        arr[i].ch = str[0];
-    }
-    HaffmanTree *tree = build(arr, n);
-    for (int i = 0; i < tree->n; i++) {
-        printf("%c : %s\n", tree->codes[i].ch, tree->codes[i].str);
-    }
-    return 0;
 }
