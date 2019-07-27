@@ -68,7 +68,7 @@ int extractCodes(Node *root, Code *arr, int k, int l, char *buff) {
     //delta = 0;在相关子树中编码了多少个字符
     int delta = 0;
     buff[l] = '0';//向左子树中走
-    delta += extractCodes(root->next[0], arr, k + delta, l + 1, buff);
+    delta += extractCodes(root->next[0], arr, k , l + 1, buff);
     buff[l] = '1';
     delta += extractCodes(root->next[1], arr, k + delta, l + 1, buff);
     return delta;
