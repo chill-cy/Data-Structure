@@ -43,7 +43,7 @@ int insert(Vector *vec, int ind, int val) {
     if (ind < 0 || ind > vec->length) return 0;
     for (int i = vec->length; i > ind; i--) {
         vec->data[i] = vec->data[i - 1];
-        }
+    }
     vec->data[ind] = val;
     vec->length += 1;
     return 1;

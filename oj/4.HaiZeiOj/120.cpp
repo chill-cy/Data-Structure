@@ -16,6 +16,7 @@ int is_run(int y) {
 int main() {
     int y, m, d;
     cin >> y >> m >> d;
+    
     if (m == 2 && is_run(y)) {
         if (d >= 1 && d <= 29)
             cout << "YES"; 
@@ -35,6 +36,7 @@ int main() {
             cout << "YES";
         } else cout << "NO";
     }
+    if (m < 1 || m > 12) cout << "NO";
     cout << endl;
     return 0;
 }
