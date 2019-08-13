@@ -17,7 +17,7 @@ typedef struct {
     int *data;
     int cnt, size;
 } KthLargest;
-
+//建立小根堆 
 void downUpdate(int *arr, int n, int ind) {
     while ((ind << 1) <= n) {
         int temp = ind, l = ind << 1, r = ind << 1 | 1;
@@ -31,6 +31,31 @@ void downUpdate(int *arr, int n, int ind) {
 
 void upUpdate(int *arr, int ind) {
     while (ind >> 1) {
+        if (arr[ind] >= arr[ind >> 1]) break;
+        swap(arr[ind], arr[ind >> 1]);
+        ind >>= 1;
+    }
+    return ;
+}
 
+int KthLargestAdd(KthLargest* , int);
+KthLargest* kthLargestCreate(int k, int* nums, int numsSize) {
+    KthLargest *p = (KthLargest *)malloc(sizeof(KthLargest));
+    p->data = (int *)malloc(sizeof(int) * (k + 1));
+    p->size = k;
+    p->cnt = k - 1;
+    memcpy(p->data + 1, nums, sizeof(int) * (k - 1));
+    for (int i = (k - 1) >> 1; i >= 1; --i) {
+        downUpdate(p->data, k - 1, i);
+    }
+    for (int i = k - 1; i < numsSize; i++) {
+        KthLargestAdd(p, nums[i]);
+    }
+    return p;
+}
+
+int kthLargestAdd(KthLargest* obj, int val) {
+    if (obj->cnt == obj->size) {
+        if (val > obj)
     }
 }

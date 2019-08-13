@@ -18,29 +18,33 @@ using namespace std;
 
 typedef struct priority_queue {
     int *data;
-    int cnt, size;
+    int cnt, size;//cnt当前存储了多少个元素
 } priority_queue;
 
+//初始化一片存储n个元素的存储区
 priority_queue *init(int n) {
     priority_queue *q = (priority_queue *)malloc(sizeof(priority_queue));
-    q->data = (int *)malloc(sizeof(int) * (n + 1));
+    q->data = (int *)malloc(sizeof(int) * (n + 1));//下标从１开始
     q->cnt = 0, q->size = n;
     return q;
 }
 
+//判空
 int empty(priority_queue *q) {
     return q->cnt == 0;
 }
 
+//查看队首元素
 int top(priority_queue *q) {
     return q->data[1];
 }
 
+//1先将元素放入队列末尾２向前调整
 int push(priority_queue *q, int val) {
     if (q->cnt == q->size) return 0;
     q->cnt += 1;
     q->data[q->cnt] = val;
-    int ind = q->cnt;
+    int ind = q->cnt;//ind有父节点指向当前新插入的元素，当前元素大于父结点元素交换，
     while (ind >> 1 && q->data[ind] > q->data[ind >> 1]) {
         swap(q->data[ind], q->data[ind >> 1]);
         ind >>= 1;
@@ -69,8 +73,6 @@ void clear(priority_queue *q) {
     free(q);
     return ;
 }
-
-
 
 int main() {
     srand(time(0));
