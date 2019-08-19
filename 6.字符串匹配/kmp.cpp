@@ -49,7 +49,7 @@ int sunday(char *str, char *pattern) {
         //这个字符在模式串中的倒数第几位，推动量
         ind[pattern[i]] = pa_len - i;
     }
-    for (int i = 0; i < str_len;) {
+    for (int i = 0; i < str_len - pa_len + 1;) {
         int flag = 1;
         for (int j = 0; j < pa_len; j++) {
             if (str[i + j] == pattern[j]) continue;
