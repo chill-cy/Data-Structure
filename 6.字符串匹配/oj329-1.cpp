@@ -1,8 +1,8 @@
 /*************************************************************************
-	> File Name: oj329.cpp
+	> File Name: oj329-1.cpp
 	> Author:jiangxiaoyu 
 	> Mail:2291372880@qq.com 
-	> Created Time: 2019年08月22日 星期四 20时45分12秒
+	> Created Time: 2019年08月24日 星期六 16时07分57秒
  ************************************************************************/
 
 #include<iostream>
@@ -11,7 +11,7 @@ using namespace std;
 #define MAX_N 100000
 int c[MAX_N + 5];
 
-inline int lowbit(int x) {
+intline int lowbit(int x) {
     return x & (-x);
 }
 
@@ -37,7 +37,7 @@ int main() {
     cin >> m;
     for (int i = 0; i < m; i++) {
         cin >> str;
-        switch(str[0]) {
+        switch (str[0]) {
             case 'C': {
                 int a, b, c;
                 cin >> a >> b >> c;
