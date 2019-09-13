@@ -1,0 +1,32 @@
+/*************************************************************************
+	> File Name: oj270-2.cpp
+	> Author:jiangxiaoyu 
+	> Mail:2291372880@qq.com 
+	> Created Time: 2019年09月03日 星期二 20时23分18秒
+ ************************************************************************/
+
+#include <algorithm>
+#include <iostream>
+using namespace std;
+#define MAX_N 300000
+int q[MAX_N + 5], head, tail;
+long long arr[MAX_N + 5];
+
+int main() {
+    long long n, m, ans;
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) {
+        cin >> arr[i], arr[i] += arr[i - 1];
+    }
+    head = tail = 0;
+    q[tail++] = 0;
+    ans = arr[1];
+    for (int i = 1; i <= n; i++) {
+        ans = max(ans, arr[i] - arr[q[head]]);
+        while (tail - head && arr[q[tail - 1]] >= arr[i]) tail--;
+        q[tail++] = i;
+        if (q[head] == i - m) head++;
+    }
+    cout << ans << endl;
+    return 0;
+}

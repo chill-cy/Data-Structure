@@ -1,0 +1,128 @@
+/*************************************************************************
+	> File Name: 6.huffman-2.cpp
+	> Author:jiangxiaoyu 
+	> Mail:2291372880@qq.com 
+	> Created Time: 2019年09月07日 星期六 21时04分14秒
+ ************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX_N 1000
+#define swap(a, b) {\
+    __typeof(a) tmp = a;\
+    a = b;\
+    b = tmp;\
+} 
+typedef struct Node {
+    char ch;
+    double p;
+    struct Node *next[2];
+} Node;
+
+
+//相关字符及其编码
+typedef struct Code {
+    char ch;
+    char *str;
+} Code;
+
+typedef struct HaffmanTree {
+    Node *root;
+    int n;//多少种字符
+    Code *codes;//记录每一个字符的编码是多少
+} HaffmanTree;
+//读入的一份数据中包含了几个字段，最好封装成一个结构体
+typedef struct Data {
+    char ch;
+    double p;
+} Data;
+
+Data arr[MAX_N + 5];
+
+HaffmanTree *getNewTree(int n) {
+    HaffmanTree *tree = (HaffmanTree *)malloc(sizeof(HaffmanTree));
+    tree->codes = (Code *)malloc(sizeof(Code) * n);
+    tree->root = NULL;
+    tree->n = n;
+    return tree;
+}
+
+Node *getNewNode(Data *obj) {
+    Node *p = (Node *)malloc(sizeof(Node));
+    p->ch = (obj ? obj->ch : 0);
+    p->p = (obj ? obj->p : 0);
+    p->next[0] = p->next[1] = NULL;
+    return p;
+}
+//n插入排序最后一位的位置,也就是从位置n开始向前插入
+void insertOnce(Node **arr, int n) {
+    for (int j = n; j >= 1; j--) {
+        if (arr[j]->p > arr[j - 1]->p) {
+            swap(arr[j], arr[j - 1]);
+            continue;
+        } 
+        break;
+    }
+    return ;
+}
+
+int extractCodes(Node *root, Code *arr, int k, int l, char *buff) {
+    buff[l] = 0;
+    if (root->next[0] == NULL && root->next[1] == NULL) {
+        arr[k].ch = root->ch;
+        arr[k].str = strdup(buff);
+        return 1;//当前编码了一个字符
+    } 
+    int delta = 0;//在当前结点之前编码了几个字符
+    buff[l] = '0';
+    delta += extractCodes(root->next[0], arr, k + delta, l + 1, buff);
+    buff[l] = '1';
+    delta += extractCodes(root->next[1], arr, k + delta, l + 1, buff);
+    return delta;
+}
+//根据字符信息建立一颗哈弗曼树
+HaffmanTree *build(Data *arr, int n) {
+    //nodes是存储结点地址的数组
+    Node **nodes = (Node **)malloc(sizeof(Node *) * n);
+    for (int i = 0; i < n; i++) {
+        nodes[i] = getNewNode(arr + i);
+    }
+    //按概率从大到小依次排序
+    for (int i = 1; i < n; i++) {
+        insertOnce(nodes, i);
+    }
+    for (int i = n - 1; i >= 1; i--) {
+        Node *p = getNewNode(NULL);
+        //
+        p->next[0] = nodes[i - 1];
+        p->next[1] = nodes[i];
+        p->p = p->next[0]->p + p->next[1]->p;
+        nodes[i - 1] = p;
+        insertOnce(nodes, i - 1);
+    }
+    char *buff = (char *)malloc(sizeof(char) * n);
+    HaffmanTree *tree = getNewTree(n);
+    tree->root = nodes[0];
+    //当前所在的哈弗曼树的根结点，将提取到的编码放到哪个数组，当前提取到第几个编码从第０个字符的编码开始提取
+    //当前已经提取到的字符编码, l路径长度
+    extractCodes(tree->root, tree->codes, 0, 0, buff);
+    free(nodes);
+    free(buff);
+    return tree;
+}
+
+int main() {
+    int n;
+    char str[10];
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%s%lf", str, &arr[i].p);
+        arr[i].ch = str[0];
+    }
+    HaffmanTree *tree = build(arr, n);
+    for (int i = 0; i < tree->n; i++) {
+        printf("%c : %s\n", tree->codes[i].ch, tree->codes[i].str);
+    }
+    return 0;
+}
