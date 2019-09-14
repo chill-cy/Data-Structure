@@ -1,0 +1,104 @@
+/*************************************************************************
+	> File Name: 14.cpp
+	> Author:jiangxiaoyu 
+	> Mail:2291372880@qq.com 
+	> Created Time: 2019年08月19日 星期一 22时12分20秒
+ ************************************************************************/
+
+#include<iostream>
+#include <string.h>
+using namespace std;
+
+char * longestCommonPrefix(char ** strs, int strsSize){
+    int min_len = 9999;
+    for (int i = 0; i < strsSize; i++) {
+        if (strlen(strs[i]) < min_len) min_len = strlen(strs[i]);
+    }
+    char *ch_m = (char *)malloc(sizeof(char) * min_len);
+    for (int j = 0; j < min_len; j++) {
+        for (int i = 1; i < strsSize; i++) {
+            if (strs[0][j] == strs[i][j]) {
+                ch_m[j] = strs[0][j];
+                continue;
+            } else {
+                ch_m[j] = '\0';
+                break;
+            }
+        }
+    }
+    return ch_m;
+}
+
+int main() {
+    int n;
+    cin >> n;
+    char **str = (char **)malloc(sizeof(char *) * n);
+    for (int i = 0; i < n; i++) {
+        str[i] = (char *)malloc(sizeof(char) * 20);
+        cin >> str[i];
+    }
+    char *s = longestCommonPrefix(str, n);
+    cout << s << endl;
+    return 0;
+}
+/*************************************************************************
+	> File Name: 19.ac.cpp
+	> Author:jiangxiaoyu 
+	> Mail:2291372880@qq.com 
+	> Created Time: 2019年08月21日 星期三 13时18分04秒
+ ************************************************************************/
+
+#include<iostream>
+using namespace std;
+#define BASE 26
+
+#define BEGIN_LETTER 'a'
+
+typedef struct Node {
+    int flag;
+    struct Node *next[BASE], *fail;
+} Node;
+
+Node *getNewNode() {
+    Node *p = (Node *)calloc(sizeof(Node), 1);
+    return p;
+}
+
+int insert(Node *root, const char *str) {
+    int cnt = 0;
+    Node *p = root;
+    for (int i = 0; str[i]; i++) {
+        int ind = str[i] - BEGIN_LETTER;
+        if (p->next[ind] == NULL) p->next[ind] = getNewNode(), ++cnt;
+        p = p->next[ind];
+    }
+
+    p->flag = 1;
+    return cnt;
+} 
+
+void clear(Node *node) {
+    if (node == NULL) return ;
+    for (int i = 0; BASE; i++) {
+        clear(node->next[i]);
+    }
+    free(node);
+    return ;
+}
+
+void build_ac(Node *root, n) {
+    
+}
+
+int main() {
+    Node *root = getNewNode();
+    int n;
+    char str[1000];
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%s", str);
+        cnt += insert(root, str);
+    }
+    //build ac
+    scanf("%s", str);
+}
