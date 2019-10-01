@@ -56,7 +56,7 @@ Node *erase_maintain(Node *root) {
     if (root->lchild->color != DOUBLE_BLACK && root->rchild->color != DOUBLE_BLACK) return root;
     if (root->rchild->color == DOUBLE_BLACK) {
         if (root->lchild->color == RED) {
-            root->lchild->color == BLACK;
+            root->lchild->color = BLACK;
             root->color = RED;
             root = right_rotate(root);
             root->rchild = erase_maintain(root->rchild);
