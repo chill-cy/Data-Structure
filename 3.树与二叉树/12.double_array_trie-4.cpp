@@ -5,8 +5,10 @@
 	> Created Time: 2019年10月10日 星期四 15时39分36秒
  ************************************************************************/
 
-#include<iostream>
-using namespace std;
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
 #define BASE 26
 #define BEGIN_LETTER 'a'
 
@@ -17,9 +19,8 @@ typedef struct Node {
 
 typedef struct DATrie {
     int *base, *check;
-    int root;
+    int root, size;
 } DATrie;
-
 
 DATrie *getDATrie(int n) {
     DATrie *tree = (DATrie *)calloc(sizeof(DATrie), 1);
@@ -27,6 +28,7 @@ DATrie *getDATrie(int n) {
     tree->size = n;
     tree->base = (int *)calloc(sizeof(int), n);
     tree->check = (int *)calloc(sizeof(int), n);
+    tree->check[tree->root] = 1;
     return tree;
 }
 
@@ -35,26 +37,26 @@ Node *getNewNode() {
     return p;
 }
 
-void insert(Node *root, const char *str) {
+int insert(Node *root, const char *str) {
+    int cnt = 0;
     Node *p = root;
-    for (int i = 0; str[i]; i++) {
+    for (int i = 0; str[i]; i++){
         int ind = str[i] - BEGIN_LETTER;
-        if (p->next[ind] == NULL) p->next[ind] = getNewNode();
+        if (p->next[i] == NULL) p->next[ind] = getNewNode(), cnt += 1;
         p = p->next[ind];
     }
     p->flag = 1;
-    return ;
+    return cnt;
 }
 
 void clear(Node *root) {
-    if (root == NULL) return; 
+    if (root == NULL) return ;
     for (int i = 0; i < BASE; i++) {
         clear(root->next[i]);
     }
     free(root);
     return ;
 }
-
 int getBaseValue(Node *root, DATrie *tree) {
     int base = 0, flag;
     do {
@@ -66,10 +68,10 @@ int getBaseValue(Node *root, DATrie *tree) {
             flag = 0;
             break;
         }
-    } while (!flag);
+    }while (!flag);
     return base;
 }
-//18520079684
+
 int buildDATrie(int ind, Node *root, DATrie *tree) {
     int base = tree->base[ind] = getBaseValue(root, tree);
     int ans = ind;
@@ -92,7 +94,7 @@ int query(DATrie *tree, const char *str) {
         int ind = str[i] - BEGIN_LETTER;
         if (abs(tree->check[tree->base[p] + ind]) != p) return 0;
         p = tree->base[p] + ind;
-    }
+    } 
     return tree->check[p] < 0;
 }
 
@@ -112,11 +114,6 @@ int main() {
     while (n--) {
         scanf("%s", str);
         cnt1 += insert(root, str);
-    }
-    DATrie *tree = getDATrie(cnt1 * BASE + 5);
-    cnt2 = buildDATrie(tree->root, root, tree) + 1;
-    while (~scanf("%s", str)) {
-        printf("search %s, res")
     }
     DATrie *tree = getDATrie(cnt1 * BASE + 5);
     cnt2 = buildDATrie(tree->root, root, tree) + 1;
