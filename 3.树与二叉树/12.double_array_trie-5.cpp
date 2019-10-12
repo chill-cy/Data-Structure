@@ -254,7 +254,153 @@ int getBaseValue(Node *root, DATrie *tree) {
     return base;
 }
 
-int getBaseV
+int getBaseValue(Node *root, DATrie *tree) {
+    int base = 0, flag;
+    do {
+        flag = 1;
+        base += 1;
+        for (int i = 0; i < BASE; i++) {
+            if (root->next[i] == NULL) continue;
+            if (tree->check[base + i] == 0) continue;
+            flag = 0;
+            break;
+        }
+    } while(!flag);
+    return base;
+}
+
+int getBaseValue(Node *root, DATrie *tree) {
+    int base = 0, flag;
+    do {
+        flag = 1;
+        base += 1;
+        for (int i = 0; i < BASE; i++) {
+            if (root->next[i] == NULL) continue;
+            if (tree->check[base + i] == 0) continue;
+            flag = 0;
+            break;
+        }
+    } while(!flag);
+    return base;
+}
+
+int getBaseValue(Node *root, DATrie *tree) {
+    int base = 0, flag;
+    do {
+        base += 1;
+        flag = 1;
+        for (int i = 0; i < BASE; i++) {
+            if (root->next[i] == NULL) continue;
+            if (tree->check[base + i] == 0) continue;
+            flag = 0;
+            break;
+        }
+    } while (!flag);
+    return base;
+}
+
+int getBaseValue(Node *root, DATrie *tree) {
+    int base = 0, flag;
+    do {
+        base += 1;
+        flag = 1;
+        for (int i = 0; i < BASE; i++) {
+            if (root->next[i] == NULL) continue;
+            if (tree->check[base + i] == 0) continue;
+            flag = 0;
+            break;
+        }             
+    } while (!flag);
+    return base;
+}
+
+int getBaseValue(Node *root, DATrie *tree) {
+    int base = 0, flag;
+    do {
+        flag = 1;
+        base += 1;
+        for (int i = 0; i < BASE; i++) {
+            if (root->next[i] == NULL) continue;
+            if (tree->check[base + i] == 0) continue;
+            flag = 0;
+            break;
+        }
+    } while (!flag);
+    return base;
+}
+
+int getBaseValue(Node *root, DATrie *tree) {
+    int base = 0, flag;
+    do {
+        base += 1;
+        flag = 1;
+        for (int i = 0; i < BASE; i++) {
+            if (root->next[i] == NULL) continue;
+            if (tree->check[base + i] == 0) continue;
+            flag = 0;
+            break;
+        }
+    } while (!flag);
+    return base;
+}
+
+int getBaseValue(Node *root, DATrie *tree) {
+    int base = 0, flag;
+    do {
+        flag = 1;
+        base += 1;
+        for (int i = 0; i < BASE; i++) {
+            if (root->next[i] == NULL) continue;
+            if (tree->check[base + i] == 0) continue;
+            flag = 0;
+            break;
+        }
+    } while (!flag);
+    return base;
+}
+
+int query(DATrie *tree, const char *str) {
+    int p = tree->root;
+    for (int i = 0; str[i]; i++) {
+        int ind = str[i] - BEGIN_LETTER;
+        if (abs(tree->check[tree->base[p] + ind]) != p) return 0;
+        p = tree->base[p] + ind;
+    }
+    if (root->flag) tree->check[ind] = -tree->check[ind];
+    return tree->check[p] < 0;
+}
+
+int buildDATrie(int ind, Node *root, DATrie *tree) {
+    int base = tree->base[ind] = getBaseValue(root, tree);
+    int ans = ind;
+    for (int i = 0; i < BASE; i++) {
+        if (root->next[i] == NULL) continue;
+        tree->check[base + i] = ind;
+    }
+    for (int i = 0; i < BASE; i++) {
+        if (root->next[i] == NULL) continue;
+        int temp = buildDATrie(base + i, root->next[i], tree);
+        if (temp > ans) ans = temp;
+    }
+    if (root->flag) tree->check[ind] = -tree->check[ind];
+    return ans;
+}
+
+int buildDATrie(int ind, Node *root, DATrie *tree) {
+    int base = tree->base[ind] = getBaseValue(root, tree);
+    int ans = ind;
+    for (int i = 0; i < BASE; i++) {
+        if (root->next[i] == NULL) continue;
+        tree->check[base + i] = ind;
+    }
+    for (int i = 0; i < BASE; i++) {
+        if (root->next[i] == NULL) continue;
+        int temp = buildDATrie(base + i, root->next[i], tree);
+        if (temp > ans) ans = temp;
+    }
+    if (root->flag) tree->check[ind] = -tree->check[ind];
+    return ans;
+}
 
 void clear(Node *root) {
     if (root == NULL) return root;
