@@ -1,16 +1,15 @@
 /*************************************************************************
-	> File Name: 428.cpp
+	> File Name: 4.deep_copy.cpp
 	> Author:jiangxiaoyu 
 	> Mail:2291372880@qq.com 
-	> Created Time: 2019年10月11日 星期五 23时34分20秒
+	> Created Time: 2019年10月12日 星期六 18时49分08秒
  ************************************************************************/
 
 #include<iostream>
 using namespace std;
 
-
-
-int main() {
-
-    return 0;
+class A {
+    A() {
+        str = 
+    }
 }
