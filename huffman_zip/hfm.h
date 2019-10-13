@@ -141,7 +141,7 @@ int prepare(char *filename) {
             fscanf(fp, "%c", &c);
             x2 = (int) c;
             x2 = x2 & 0x000000ff;
-            x1 = x1 | x2; 
+            x1 = x1 | x2;
         } else {
             x1 = (int)c;
         }
@@ -230,3 +230,4 @@ HuffmanTree *build(int n) {
     free(buff);
     return tree;
 }
+
