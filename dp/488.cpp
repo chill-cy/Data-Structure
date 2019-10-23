@@ -32,6 +32,6 @@ int main() {
     int n;
     cin >> n;
     for (int i = 1; i <= n; i++) cin >> point[i].x >> point[i].y;
-    cout << dp(n + 1, 1) << endl;
+    cout << dp(n, 1) << endl;
     return 0;
 }
