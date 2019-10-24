@@ -10,18 +10,16 @@
 #include<iostream>
 using namespace std;
 
-#define MAX_N 1000
-long long ans[MAX_N + 5];
+long long fac(long long n) {
+    if (n == 1) return 1;
+    if (n == 2) return 3;
+    if (n == 3) return 5;
+    return fac(n - 1) % 12345 + 2 * fac(n - 2) % 12345;
+}
 
 int main() {
-    int n;
+    long long n;
     cin >> n;
-    ans[1] = 1;
-    ans[2] = 3;
-    for (int i = 3; i <= n; i++) {
-        ans[i] = ans[i - 1] + 2 * ans[i - 2];
-        ans[i] %= 12345;
-    }
-    cout << ans[n] << endl;
+    cout << fac(n) % 12345<< endl;
     return 0;
 }

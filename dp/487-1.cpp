@@ -14,15 +14,13 @@
 #include<iostream>
 using namespace std;
 
-long long ans[50];
-
+int add_color(int n) {
+    if (n == 1 || n == 2) return 1;
+    return (add_color(n - 1) + add_color(n - 2)) * 2;
+}
 int main() {
     int n;
     cin >> n;
-    ans[1] = ans[2] = 1;
-    for (int i = 3; i <= n; i++) {
-        ans[i] = (ans[i - 1] + ans[i - 2]) * 2;
-    }
-    cout << ans[n] << endl;
+    cout << add_color(n) << endl;
     return 0;
 }
