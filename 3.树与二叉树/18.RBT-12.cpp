@@ -178,8 +178,12 @@ Node *insert(Node *root, int key) {
 
 void output(Node *root) {
     if (root == NIL) return;
+    printf("%d color:%d, child:[%d %d]\n", 
+           root->key, 
+           root->color, 
+           root->lchild->key, 
+           root->rchild->key);
     output(root->lchild);
-    printf("%d %d %d %d\n", root->key, root->color, root->lchild->key, root->rchild->key);
     output(root->rchild);
     return ;
 }
@@ -190,8 +194,8 @@ int main() {
         switch(op) {
             case 1: root = insert(root, val); break;
             case 2: root = erase(root, val); break;
-            case 3: output(root); break;
         }
+        output(root);
     }
     return 0;
 }
